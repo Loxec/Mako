@@ -1,8 +1,7 @@
 # Mako 2D Render Engine (Java)
 
 A lightweight 2D rendering engine built from scratch in Java using Swing.  
-This project is the foundation of a custom game/graphics engine, created as a learning base for future game development and possible 3D expansion.
-
+This project is the foundation of a custom game/graphics engine, created as a learning base for future game development 
 ---
 
 ## Overview
@@ -13,6 +12,7 @@ Mako 2D Render Engine is a minimal rendering system that handles:
 - Triangle rasterization
 - Mesh composition
 - Basic scene rendering inside a Swing panel
+- Sprites
 
 The goal is to understand how rendering pipelines work at a low level without relying on external game engines.
 
@@ -49,7 +49,9 @@ net.mako
 ├── Mesh          → Collection of triangles
 ├── Triangle      → Primitive shape
 ├── Vertex        → 2D coordinate
-├── Square        → Helper shape (2 triangles)
+├── MRectangle    → Helper shape (2 triangles) 
+├── Utils         → Provide usefull function and variables
+├── Sprite        → You can now load images
 
 ````
 
@@ -119,18 +121,6 @@ public class Main {
     }
 }
 ````
-
----
-
-## Roadmap
-
-* [ ] Game loop with delta time
-* [ ] Camera system
-* [ ] Transformations (translate / rotate / scale)
-* [ ] Depth (Z) / pseudo-3D projection
-* [ ] Rendering optimization (batching)
-* [ ] Input system (keyboard / mouse)
-* [ ] Sprite rendering support
 
 ---
 
