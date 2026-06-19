@@ -68,11 +68,11 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        //gives a JFrame with some informations
+        //gives a JFrame with some information
         JFrame window = Utils.getBasicJFrame("Mako renderer");
         window.setLayout(new BorderLayout());
 
-        //add the renderer panel wich will contain every meshes
+        //add the renderer panel which will contain every meshes
         RenderPanel panel = new RenderPanel();
         window.add(panel, BorderLayout.CENTER);
 
@@ -86,10 +86,10 @@ public class Main {
                 true
         );
 
-        //renderPanel only accept mesh wich is a list of triangle , so we can directly do Triangle.toMesh() to save space
+        //renderPanel only accept mesh which is a list of triangle , so we can directly do Triangle.toMesh() to save space
         panel.addMeshToPanel(t.toMesh());
 
-        //its important to refresh the panel
+        //it's important to refresh the panel
         new Thread(() -> {
             while (true) {
                 panel.repaint();
