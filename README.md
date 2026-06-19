@@ -1,39 +1,27 @@
-# Mako 2D Render Engine (Java)
+# Mako 2D Game Engine (Java)
 
-A lightweight 2D rendering engine built from scratch in Java using Swing.  
-This project is the foundation of a custom game/graphics engine, created as a learning base for future game development 
----
-
-## Overview
-
-Mako 2D Render Engine is a minimal rendering system that handles:
-
-- Vertex-based geometry
-- Triangle rasterization
-- Mesh composition
-- Basic scene rendering inside a Swing panel
-- Sprites
-
-The goal is to understand how rendering pipelines work at a low level without relying on external game engines.
-
+A lightweight 2D game engine built from scratch in Java.  
+This project is the foundation of a custom game, created as a learning base for future game development
 ---
 
 ## Current Features
 
-### Geometry System
+### RENDERING
+
+#### Geometry System
 - Vertex (2D point structure)
 - Triangle primitive
 - Square (composed of two triangles)
 - Mesh grouping system
 
-### Rendering
+#### Rendering
 - Custom RenderPanel based on JPanel
 - Triangle rendering using Path2D
 - Filled polygon support
 - Color support per triangle
 - Continuous render loop (basic game loop)
 
-### Engine Structure
+#### Engine Structure
 - Simple mesh-based scene system
 - Manual repaint loop
 - Swing-based window system
@@ -44,7 +32,7 @@ The goal is to understand how rendering pipelines work at a low level without re
 
 ```
 
-net.mako
+net.mako.rendering
 ├── RenderPanel   → Main rendering surface
 ├── Mesh          → Collection of triangles
 ├── Triangle      → Primitive shape
@@ -57,10 +45,11 @@ net.mako
 
 ---
 
-## Example Usage
+## Example usage for rendering part
 
 ```java
-import net.mako.*;
+
+import net.mako.rendering.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +78,7 @@ public class Main {
         panel.addMeshToPanel(t.toMesh());
 
         //load a new sprite
-        Sprite sprite = new Sprite("/assets/skybox_pearl.png",300,300);
+        Sprite sprite = new Sprite("/assets/skybox_pearl.png", 300, 300);
 
         //just do whatever you want with the scale and position
         int scale_multiplier = 1;
@@ -98,7 +87,7 @@ public class Main {
 
         sprite.setRotation(45.0);
 
-        sprite.setPosition(350,350);
+        sprite.setPosition(350, 350);
 
         //and then add the sprite ready
         panel.addSpriteToPanel(sprite);
@@ -121,16 +110,6 @@ public class Main {
     }
 }
 ````
-
----
-
-## Why this project?
-
-* Learn how rendering pipelines work
-* Understand geometry and rasterization
-* Build a foundation for a custom game engine
-* Prepare future transition toward 3D engine development
-
 ---
 
 ## Status

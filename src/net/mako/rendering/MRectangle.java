@@ -1,4 +1,4 @@
-package net.mako;
+package net.mako.rendering;
 
 import java.awt.*;
 

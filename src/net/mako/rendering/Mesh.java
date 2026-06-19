@@ -1,6 +1,5 @@
-package net.mako;
+package net.mako.rendering;
 
-import java.awt.*;
 import java.util.List;
 
 public class Mesh {

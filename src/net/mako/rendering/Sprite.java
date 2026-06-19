@@ -1,4 +1,4 @@
-package net.mako;
+package net.mako.rendering;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
