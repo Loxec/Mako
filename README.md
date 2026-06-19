@@ -1,4 +1,3 @@
-```md
 # Mako 2D Render Engine (Java)
 
 A lightweight 2D rendering engine built from scratch in Java using Swing.  
@@ -127,6 +126,3 @@ Made for learning and experimentation.
 ## Author
 
 Made with Java and curiosity.
-
-```
-```
