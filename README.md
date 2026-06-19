@@ -58,39 +58,50 @@ net.mako
 ## Example Usage
 
 ```java
-JFrame window = new JFrame("Mako Engine");
-window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-window.setSize(800, 600);
-window.setLayout(new BorderLayout());
+import net.mako.RenderPanel;
+import net.mako.Triangle;
+import net.mako.Vertex;
+import net.mako.Utils;
 
-RenderPanel panel = new RenderPanel();
-window.add(panel, BorderLayout.CENTER);
+import javax.swing.*;
+import java.awt.*;
 
-window.setVisible(true);
+public class Main {
+    public static void main(String[] args) {
+        //gives a JFrame with some informations
+        JFrame window = Utils.getBasicJFrame("Mako renderer");
+        window.setLayout(new BorderLayout());
 
-// Create triangle
-Triangle t = new Triangle(
-    new Vertex(100, 100),
-    new Vertex(150, 200),
-    new Vertex(200, 100),
-    true
-);
+        //add the renderer panel wich will contain every meshes
+        RenderPanel panel = new RenderPanel();
+        window.add(panel, BorderLayout.CENTER);
 
-// Add to mesh
-Mesh mesh = new Mesh(List.of(t));
-panel.addMeshToPanel(mesh);
+        window.setVisible(true);
 
-// Render loop
-new Thread(() -> {
-    while (true) {
-        panel.repaint();
-        try {
-            Thread.sleep(16);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // add a new triangle made of 3 Vertex and a boolean that represent if we need to fill it or no (we can also specify color)
+        Triangle t = new Triangle(
+                new Vertex(100, 100),
+                new Vertex(150, 200),
+                new Vertex(200, 100),
+                true
+        );
+
+        //renderPanel only accept mesh wich is a list of triangle , so we can directly do Triangle.toMesh() to save space
+        panel.addMeshToPanel(t.toMesh());
+
+        //its important to refresh the panel
+        new Thread(() -> {
+            while (true) {
+                panel.repaint();
+                try {
+                    Thread.sleep(16);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
-}).start();
+}
 ````
 
 ---
