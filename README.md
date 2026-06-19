@@ -58,10 +58,7 @@ net.mako
 ## Example Usage
 
 ```java
-import net.mako.RenderPanel;
-import net.mako.Triangle;
-import net.mako.Vertex;
-import net.mako.Utils;
+import net.mako.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,9 +86,28 @@ public class Main {
         //renderPanel only accept mesh which is a list of triangle , so we can directly do Triangle.toMesh() to save space
         panel.addMeshToPanel(t.toMesh());
 
+        //load a new sprite
+        Sprite sprite = new Sprite("/assets/skybox_pearl.png",300,300);
+
+        //just do whatever you want with the scale and position
+        int scale_multiplier = 1;
+        sprite.setScaleX(sprite.getScaleX() * scale_multiplier);
+        sprite.setScaleY(sprite.getScaleY() * scale_multiplier);
+
+        sprite.setRotation(45.0);
+
+        sprite.setPosition(350,350);
+
+        //and then add the sprite ready
+        panel.addSpriteToPanel(sprite);
+
+
         //it's important to refresh the panel
         new Thread(() -> {
             while (true) {
+
+                sprite.setRotation(sprite.getRotation() + 1.0);
+
                 panel.repaint();
                 try {
                     Thread.sleep(16);

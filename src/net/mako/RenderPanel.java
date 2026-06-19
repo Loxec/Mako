@@ -1,14 +1,20 @@
 package net.mako;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RenderPanel extends JPanel {
 
     private static List<Mesh> meshes = new ArrayList<>();
+    private static List<Sprite> sprites = new ArrayList<>();
 
     public RenderPanel() {
 
@@ -21,6 +27,9 @@ public class RenderPanel extends JPanel {
 
     public void addMeshToPanel(Mesh mesh) {
         meshes.add(mesh);
+    }
+    public void addSpriteToPanel(Sprite sprite) {
+        sprites.add(sprite);
     }
 
     private static void drawMeshes(Graphics2D g2d) {
@@ -41,11 +50,35 @@ public class RenderPanel extends JPanel {
         }
     }
 
+    private static void drawSprites(Graphics2D g2d) {
+        for(Sprite sprite : sprites) {
+            if(sprite.getImage() != null) {
+                AffineTransform at = new AffineTransform();
+
+                at.translate(sprite.getX(), sprite.getY());
+
+                at.rotate(
+                        Math.toRadians(sprite.getRotation()),
+                        sprite.getScaleX() / 2,
+                        sprite.getScaleY() / 2
+                );
+
+                at.scale(
+                        sprite.getScaleX() / sprite.getImage().getWidth(),
+                        sprite.getScaleY() / sprite.getImage().getHeight()
+                );
+
+                g2d.drawImage(sprite.getImage(), at, null);
+            }
+        }
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         drawMeshes(g2d);
+        drawSprites(g2d);
     }
 
 }
