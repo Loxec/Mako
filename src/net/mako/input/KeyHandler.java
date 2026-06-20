@@ -30,36 +30,36 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // ARROWS
-        if(code == KeyEvent.VK_LEFT) {
+        if(code == KeyEvent.VK_LEFT && onLeftPressed != null) {
             onLeftPressed.run();
-        }else if(code == KeyEvent.VK_RIGHT) {
+        }else if(code == KeyEvent.VK_RIGHT && onRightPressed != null) {
             onRightPressed.run();
-        }else if(code == KeyEvent.VK_UP) {
+        }else if(code == KeyEvent.VK_UP && onForwardPressed != null) {
             onForwardPressed.run();
-        }else if(code == KeyEvent.VK_DOWN) {
+        }else if(code == KeyEvent.VK_DOWN && onBackwardPressed != null) {
             onBackwardPressed.run();
         }
 
         // QWERTY
-        if(code == KeyEvent.VK_A) {
+        if(code == KeyEvent.VK_A && onLeftPressed != null) {
             onLeftPressed.run();
-        }else if(code == KeyEvent.VK_D) {
+        }else if(code == KeyEvent.VK_D && onRightPressed != null) {
             onRightPressed.run();
-        }else if(code == KeyEvent.VK_W) {
+        }else if(code == KeyEvent.VK_W && onForwardPressed != null) {
             onForwardPressed.run();
-        }else if(code == KeyEvent.VK_S) {
+        }else if(code == KeyEvent.VK_S && onBackwardPressed != null) {
             onBackwardPressed.run();
         }
 
         // AZERTY
 
-        if(code == KeyEvent.VK_Q) {
+        if(code == KeyEvent.VK_Q && onLeftPressed != null) {
             onLeftPressed.run();
-        }else if(code == KeyEvent.VK_D) {
+        }else if(code == KeyEvent.VK_D && onRightPressed != null) {
             onRightPressed.run();
-        }else if(code == KeyEvent.VK_Z) {
+        }else if(code == KeyEvent.VK_Z && onForwardPressed != null) {
             onForwardPressed.run();
-        }else if(code == KeyEvent.VK_S) {
+        }else if(code == KeyEvent.VK_S && onBackwardPressed != null) {
             onBackwardPressed.run();
         }
 

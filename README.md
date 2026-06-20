@@ -6,7 +6,7 @@ This project is the foundation of a custom game, created as a learning base for 
 
 ## Current Features
 
-### RENDERING
+## RENDERING
 
 #### Geometry System
 - Vertex (2D point structure)
@@ -26,6 +26,13 @@ This project is the foundation of a custom game, created as a learning base for 
 - Manual repaint loop
 - Swing-based window system
 
+## INPUT
+
+#### Keyboard
+- Simple keyListener
+- Runnables 
+- Custom renables like backward forward etc
+
 ---
 
 ## Project Structure
@@ -43,12 +50,20 @@ net.mako.rendering
 
 ````
 
+```
+
+net.mako.input
+├── KeyHandler    → The keyboard listener
+├── MouseHandler  → The mouse listener
+
+```
+
 ---
 
-## Example usage for rendering part
+## Example usage
 
 ```java
-
+import net.mako.input.KeyHandler;
 import net.mako.rendering.*;
 
 import javax.swing.*;
@@ -92,6 +107,28 @@ public class Main {
         //and then add the sprite ready
         panel.addSpriteToPanel(sprite);
 
+        // used to control the sprite
+        KeyHandler kh = new KeyHandler();
+
+        // add this to the panel
+        window.addKeyListener(kh);
+
+
+        // assing the runnables before the loop ;)
+        int speed = 5;
+
+        kh.onForwardPressed = (() -> {
+            sprite.setPosition(sprite.getX(),sprite.getY()-speed);
+        });
+        kh.onBackwardPressed = (() -> {
+            sprite.setPosition(sprite.getX(),sprite.getY()+speed);
+        });
+        kh.onRightPressed = (() -> {
+            sprite.setPosition(sprite.getX()+speed,sprite.getY());
+        });
+        kh.onLeftPressed = (() -> {
+            sprite.setPosition(sprite.getX()-speed,sprite.getY());
+        });
 
         //it's important to refresh the panel
         new Thread(() -> {
