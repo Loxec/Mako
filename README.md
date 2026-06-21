@@ -33,6 +33,13 @@ This project is the foundation of a custom game, created as a learning base for 
 - Runnables 
 - Custom renables like backward forward etc
 
+## UTILITIES
+
+#### Triangle Transforme
+- you can rotate your triangle
+- you can translate your triangle
+- you can scaleUp/Down your triangle
+
 ---
 
 ## Project Structure
@@ -58,6 +65,14 @@ net.mako.input
 
 ```
 
+```
+
+net.mako.utilities
+
+├── TriangleTransform → the method that make your life simpler
+
+```
+
 ---
 
 ## Example usage
@@ -65,6 +80,7 @@ net.mako.input
 ```java
 import net.mako.input.KeyHandler;
 import net.mako.rendering.*;
+import net.mako.utilities.TriangleTransform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,15 +98,35 @@ public class Main {
         window.setVisible(true);
 
         // add a new triangle made of 3 Vertex and a boolean that represent if we need to fill it or no (we can also specify color)
-        Triangle t = new Triangle(
+        Triangle t1 = new Triangle(
                 new Vertex(100, 100),
                 new Vertex(150, 200),
                 new Vertex(200, 100),
-                true
+                true,
+                "move"
         );
 
+        Triangle t2 = new Triangle(
+                new Vertex(100, 100),
+                new Vertex(150, 200),
+                new Vertex(200, 100),
+                true,
+                "rotate",
+                new Color(255,0,0)
+        );
+        Triangle t3 = new Triangle(
+                new Vertex(100, 100),
+                new Vertex(150, 200),
+                new Vertex(200, 100),
+                true,
+                "scale"
+        );
+
+
         //renderPanel only accept mesh which is a list of triangle , so we can directly do Triangle.toMesh() to save space
-        panel.addMeshToPanel(t.toMesh());
+        panel.addMeshToPanel(t1.toMesh());
+        panel.addMeshToPanel(t3.toMesh());
+        panel.addMeshToPanel(t2.toMesh());
 
         //load a new sprite
         Sprite sprite = new Sprite("/assets/skybox_pearl.png", 300, 300);
@@ -135,6 +171,21 @@ public class Main {
             while (true) {
 
                 sprite.setRotation(sprite.getRotation() + 1.0);
+
+                //we get all the meshes
+                for(Mesh mesh : panel.getMeshes()){
+                    //then the triangles
+                    for(Triangle tt : mesh.triangles){
+                        // and then we search our wanted triangle
+                        if(tt.getTag().equals("move")){
+                            TriangleTransform.translate(1,0,tt);
+                        }else if(tt.getTag().equals("rotate")){
+                            TriangleTransform.rotate(1,tt);
+                        }else if(tt.getTag().equals("scale")){
+                            TriangleTransform.scaleUp(1.0025,tt);
+                        }
+                    }
+                };
 
                 panel.repaint();
                 try {

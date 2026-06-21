@@ -77,4 +77,11 @@ public class RenderPanel extends JPanel {
         drawSprites(g2d);
     }
 
+    public List<Mesh> getMeshes() {
+        return meshes;
+    }
+    public List<Sprite> getSprites() {
+        return sprites;
+    }
+
 }

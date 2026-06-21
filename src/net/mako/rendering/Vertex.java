@@ -2,10 +2,10 @@ package net.mako.rendering;
 
 public class Vertex {
 
-    public int x;
-    public int y;
+    public double x;
+    public double y;
 
-    public Vertex(int x, int y){
+    public Vertex(double x, double y){
         this.x = x;
         this.y = y;
     }
