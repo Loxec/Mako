@@ -5,12 +5,13 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RenderPanel extends JPanel {
 
-    private static List<Mesh> meshes = new ArrayList<>();
-    private static List<Sprite> sprites = new ArrayList<>();
+    private static final List<Mesh> meshes = Collections.synchronizedList(new ArrayList<>());
+    private static final List<Sprite> sprites = Collections.synchronizedList(new ArrayList<>());
 
     public RenderPanel() {
 
@@ -29,42 +30,46 @@ public class RenderPanel extends JPanel {
     }
 
     private static void drawMeshes(Graphics2D g2d) {
-        for(Mesh mesh : meshes) {
-            for (Triangle t : mesh.triangles) {
-                Path2D path = new Path2D.Double();
-                path.moveTo(t.v1.x, t.v1.y);
-                path.lineTo(t.v2.x, t.v2.y);
-                path.lineTo(t.v3.x, t.v3.y);
-                path.closePath();
-                g2d.draw(path);
-
-                if (t.filled) {
+        synchronized (meshes) {
+            for (Mesh mesh : meshes) {
+                for (Triangle t : mesh.triangles) {
                     g2d.setColor(t.color);
-                    g2d.fill(path);
+                    Path2D path = new Path2D.Double();
+                    path.moveTo(t.v1.x, t.v1.y);
+                    path.lineTo(t.v2.x, t.v2.y);
+                    path.lineTo(t.v3.x, t.v3.y);
+                    path.closePath();
+                    g2d.draw(path);
+
+                    if (t.filled) {
+                        g2d.fill(path);
+                    }
                 }
             }
         }
     }
 
     private static void drawSprites(Graphics2D g2d) {
-        for(Sprite sprite : sprites) {
-            if(sprite.getImage() != null) {
-                AffineTransform at = new AffineTransform();
+        synchronized (sprites) {
+            for (Sprite sprite : sprites) {
+                if (sprite.getImage() != null) {
+                    AffineTransform at = new AffineTransform();
 
-                at.translate(sprite.getX(), sprite.getY());
+                    at.translate(sprite.getX(), sprite.getY());
 
-                at.rotate(
-                        Math.toRadians(sprite.getRotation()),
-                        sprite.getScaleX() / 2,
-                        sprite.getScaleY() / 2
-                );
+                    at.rotate(
+                            Math.toRadians(sprite.getRotation()),
+                            sprite.getScaleX() / 2,
+                            sprite.getScaleY() / 2
+                    );
 
-                at.scale(
-                        sprite.getScaleX() / sprite.getImage().getWidth(),
-                        sprite.getScaleY() / sprite.getImage().getHeight()
-                );
+                    at.scale(
+                            sprite.getScaleX() / sprite.getImage().getWidth(),
+                            sprite.getScaleY() / sprite.getImage().getHeight()
+                    );
 
-                g2d.drawImage(sprite.getImage(), at, null);
+                    g2d.drawImage(sprite.getImage(), at, null);
+                }
             }
         }
     }

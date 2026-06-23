@@ -40,6 +40,11 @@ This project is the foundation of a custom game, created as a learning base for 
 - you can translate your triangle
 - you can scaleUp/Down your triangle
 
+## MSH
+- a new file format to create easy model in 2d
+- .msh loader
+- .msh converter into mesh
+
 ---
 
 ## Project Structure
@@ -54,6 +59,15 @@ net.mako.rendering
 ├── MRectangle    → Helper shape (2 triangles) 
 ├── Utils         → Provide usefull function and variables
 ├── Sprite        → You can now load images
+
+````
+
+```
+
+net.mako.msh
+├── FormatType     → Used to sort the files and their formating
+├── ModelParser    → What help you at loading your model
+├── ModelConverter → More for internal purpose
 
 ````
 
@@ -79,6 +93,7 @@ net.mako.utilities
 
 ```java
 import net.mako.input.KeyHandler;
+import net.mako.msh.ModelParser;
 import net.mako.rendering.*;
 import net.mako.utilities.TriangleTransform;
 
@@ -122,11 +137,16 @@ public class Main {
                 "scale"
         );
 
+        //loading a model for each different format
+        ModelParser basic_t_model = new ModelParser("/assets/exemple_bt.msh");
+        ModelParser indexed_t_model = new ModelParser("/assets/exemple_it.msh");
 
         //renderPanel only accept mesh which is a list of triangle , so we can directly do Triangle.toMesh() to save space
         panel.addMeshToPanel(t1.toMesh());
         panel.addMeshToPanel(t3.toMesh());
         panel.addMeshToPanel(t2.toMesh());
+        panel.addMeshToPanel(basic_t_model.getMesh(basic_t_model.getFormatType()));
+        panel.addMeshToPanel(indexed_t_model.getMesh(indexed_t_model.getFormatType()));
 
         //load a new sprite
         Sprite sprite = new Sprite("/assets/skybox_pearl.png", 300, 300);

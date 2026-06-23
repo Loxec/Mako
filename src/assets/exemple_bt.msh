@@ -1,0 +1,19 @@
+msh_format:basic_t
+
+t:[
+    v:{0,0},
+    v:{50,0},
+    v:{50,50},
+    fill:true,
+    color:{255,0,0},
+    tag:test1
+]
+
+t:[
+    v:{0,0},
+    v:{0,50},
+    v:{50,50},
+    fill:false,
+    color:{0,255,0},
+    tag:test2
+]

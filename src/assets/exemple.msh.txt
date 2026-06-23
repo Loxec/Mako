@@ -1,0 +1,26 @@
+msh_format:basic_t <-- diferrent format type with different features
+
+# you can write comment like that
+
+in basic_t:
+t:[ <-- in basic_t you only write triangle
+    v:{0,0}, <-- all 3 vertices are required
+    v:{50,0},
+    v:{50,50},
+
+    rest are mandatory
+
+    color:{255,0,0},
+    tag:test
+]
+
+in indexed_t:
+vertices:[
+    0,0
+    50,0
+    50,50
+]
+
+t:[
+    0,1,2
+]
