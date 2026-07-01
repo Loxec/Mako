@@ -24,3 +24,22 @@ vertices:[
 t:[
     0,1,2
 ]
+
+in multimesh:
+mesh:[
+//follow the rules as basic_t
+]
+
+in indexed_multimesh:
+
+vertices:[
+    0,0
+    50,0
+    50,50
+]
+
+mesh:[
+    t:[
+        0,1,2
+    ]
+]

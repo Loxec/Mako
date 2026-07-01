@@ -1,4 +1,4 @@
-package net.mako.rendering;
+package net.mako.tdim.rendering;
 
 import javax.swing.*;
 import java.awt.*;

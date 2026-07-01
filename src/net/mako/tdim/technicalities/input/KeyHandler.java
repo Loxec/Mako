@@ -1,66 +1,67 @@
-package net.mako.input;
+package net.mako.tdim.technicalities.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.function.Consumer;
 
 public class KeyHandler implements KeyListener {
 
-    public Runnable onKeyPressed;
-    public Runnable onKeyReleased;
-    public Runnable onKeyTyped;
+    public Consumer onKeyPressed;
+    public Consumer onKeyReleased;
+    public Consumer onKeyTyped;
 
-    public Runnable onForwardPressed;
-    public Runnable onBackwardPressed;
-    public Runnable onLeftPressed;
-    public Runnable onRightPressed;
+    public Consumer onForwardPressed;
+    public Consumer onBackwardPressed;
+    public Consumer onLeftPressed;
+    public Consumer onRightPressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
         if(onKeyTyped != null) {
-            onKeyTyped.run();
+            onKeyTyped.accept(e);
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if(onKeyPressed != null) {
-            onKeyPressed.run();
+            onKeyPressed.accept(e);
         }
 
         int code = e.getKeyCode();
 
         // ARROWS
         if(code == KeyEvent.VK_LEFT && onLeftPressed != null) {
-            onLeftPressed.run();
+            onLeftPressed.accept(e);
         }else if(code == KeyEvent.VK_RIGHT && onRightPressed != null) {
-            onRightPressed.run();
+            onRightPressed.accept(e);
         }else if(code == KeyEvent.VK_UP && onForwardPressed != null) {
-            onForwardPressed.run();
+            onForwardPressed.accept(e);
         }else if(code == KeyEvent.VK_DOWN && onBackwardPressed != null) {
-            onBackwardPressed.run();
+            onBackwardPressed.accept(e);
         }
 
         // QWERTY
         if(code == KeyEvent.VK_A && onLeftPressed != null) {
-            onLeftPressed.run();
+            onLeftPressed.accept(e);
         }else if(code == KeyEvent.VK_D && onRightPressed != null) {
-            onRightPressed.run();
+            onRightPressed.accept(e);
         }else if(code == KeyEvent.VK_W && onForwardPressed != null) {
-            onForwardPressed.run();
+            onForwardPressed.accept(e);
         }else if(code == KeyEvent.VK_S && onBackwardPressed != null) {
-            onBackwardPressed.run();
+            onBackwardPressed.accept(e);
         }
 
         // AZERTY
 
         if(code == KeyEvent.VK_Q && onLeftPressed != null) {
-            onLeftPressed.run();
+            onLeftPressed.accept(e);
         }else if(code == KeyEvent.VK_D && onRightPressed != null) {
-            onRightPressed.run();
+            onRightPressed.accept(e);
         }else if(code == KeyEvent.VK_Z && onForwardPressed != null) {
-            onForwardPressed.run();
+            onForwardPressed.accept(e);
         }else if(code == KeyEvent.VK_S && onBackwardPressed != null) {
-            onBackwardPressed.run();
+            onBackwardPressed.accept(e);
         }
 
     }
@@ -68,7 +69,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if(onKeyReleased != null) {
-            onKeyReleased.run();
+            onKeyReleased.accept(e);
         }
     }
 }

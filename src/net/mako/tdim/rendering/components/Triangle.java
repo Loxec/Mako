@@ -1,4 +1,4 @@
-package net.mako.rendering;
+package net.mako.tdim.rendering.components;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ public class Triangle {
     public boolean filled;
     private String tag;
     public Runnable onTagChanged;
+    private int v_num = 0;
 
     public Triangle(Vertex v1, Vertex v2, Vertex v3,boolean filled) {
         this.v1 = v1;
@@ -97,5 +98,50 @@ public class Triangle {
         if(onTagChanged != null) {
             onTagChanged.run();
         }
+    }
+
+    public Vertex getV1() {
+        return v1;
+    }
+
+    public void setV1(Vertex v1) {
+        this.v1 = v1;
+    }
+
+    public Vertex getV2() {
+        return v2;
+    }
+
+    public void setV2(Vertex v2) {
+        this.v2 = v2;
+    }
+
+    public Vertex getV3() {
+        return v3;
+    }
+
+    public void setV3(Vertex v3) {
+        this.v3 = v3;
+    }
+
+    public void setNextVertex(Vertex v) {
+        if(v_num == 0){
+            this.v1 = v;
+            v_num++;
+        }else if(v_num == 1){
+            this.v2 = v;
+            v_num++;
+        }else if(v_num == 2){
+            this.v3 = v;
+            v_num = 0;
+        }
+    }
+
+    public int getV_num() {
+        return v_num;
+    }
+
+    public void setV_num(int v_num) {
+        this.v_num = v_num;
     }
 }

@@ -11,7 +11,7 @@ This project is the foundation of a custom game, created as a learning base for 
 #### Geometry System
 - Vertex (2D point structure)
 - Triangle primitive
-- Square (composed of two triangles)
+- Rectangle (composed of two triangles)
 - Mesh grouping system
 
 #### Rendering
@@ -30,12 +30,12 @@ This project is the foundation of a custom game, created as a learning base for 
 
 #### Keyboard
 - Simple keyListener
-- Runnables 
-- Custom renables like backward forward etc
+- Consumers 
+- Custom consumers like backward forward etc
 
 ## UTILITIES
 
-#### Triangle Transforme
+#### Triangle Transform
 - you can rotate your triangle
 - you can translate your triangle
 - you can scaleUp/Down your triangle
@@ -51,7 +51,7 @@ This project is the foundation of a custom game, created as a learning base for 
 
 ```
 
-net.mako.rendering
+net.mako.tdim.rendering
 ├── RenderPanel   → Main rendering surface
 ├── Mesh          → Collection of triangles
 ├── Triangle      → Primitive shape
@@ -64,7 +64,7 @@ net.mako.rendering
 
 ```
 
-net.mako.msh
+net.mako.tdim.rendering.msh
 ├── FormatType     → Used to sort the files and their formating
 ├── ModelParser    → What help you at loading your model
 ├── ModelConverter → More for internal purpose
@@ -73,7 +73,7 @@ net.mako.msh
 
 ```
 
-net.mako.input
+net.mako.tdim.technicalities.input
 ├── KeyHandler    → The keyboard listener
 ├── MouseHandler  → The mouse listener
 
@@ -81,7 +81,7 @@ net.mako.input
 
 ```
 
-net.mako.utilities
+net.mako.tdim.rendering.utilities
 
 ├── TriangleTransform → the method that make your life simpler
 
@@ -92,10 +92,14 @@ net.mako.utilities
 ## Example usage
 
 ```java
-import net.mako.input.KeyHandler;
-import net.mako.msh.ModelParser;
-import net.mako.rendering.*;
-import net.mako.utilities.TriangleTransform;
+import net.mako.tdim.rendering.components.Mesh;
+import net.mako.tdim.rendering.components.Sprite;
+import net.mako.tdim.rendering.components.Triangle;
+import net.mako.tdim.rendering.components.Vertex;
+import net.mako.tdim.technicalities.input.KeyHandler;
+import net.mako.tdim.rendering.msh.ModelParser;
+import net.mako.tdim.rendering.*;
+import net.mako.tdim.rendering.utilities.TriangleTransform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -127,7 +131,7 @@ public class Main {
                 new Vertex(200, 100),
                 true,
                 "rotate",
-                new Color(255,0,0)
+                new Color(255, 0, 0)
         );
         Triangle t3 = new Triangle(
                 new Vertex(100, 100),
@@ -140,13 +144,19 @@ public class Main {
         //loading a model for each different format
         ModelParser basic_t_model = new ModelParser("/assets/exemple_bt.msh");
         ModelParser indexed_t_model = new ModelParser("/assets/exemple_it.msh");
+        ModelParser multimesh_model = new ModelParser("/assets/exemple_mt.msh");
+        ModelParser indexed_multimesh_model = new ModelParser("/assets/exemple_mit.msh");
 
         //renderPanel only accept mesh which is a list of triangle , so we can directly do Triangle.toMesh() to save space
         panel.addMeshToPanel(t1.toMesh());
         panel.addMeshToPanel(t3.toMesh());
         panel.addMeshToPanel(t2.toMesh());
-        panel.addMeshToPanel(basic_t_model.getMesh(basic_t_model.getFormatType()));
-        panel.addMeshToPanel(indexed_t_model.getMesh(indexed_t_model.getFormatType()));
+
+        // adding the models and not the meshes                                 we need to place our model somewhere
+        panel.addModelToPanel(basic_t_model.getModel(basic_t_model.getFormatType()),0,0);
+        panel.addModelToPanel(indexed_t_model.getModel(indexed_t_model.getFormatType()),0,50);
+        panel.addModelToPanel(multimesh_model.getModel(multimesh_model.getFormatType()),300,0);
+        panel.addModelToPanel(indexed_multimesh_model.getModel(indexed_multimesh_model.getFormatType()),0,0);
 
         //load a new sprite
         Sprite sprite = new Sprite("/assets/skybox_pearl.png", 300, 300);
@@ -170,20 +180,20 @@ public class Main {
         window.addKeyListener(kh);
 
 
-        // assing the runnables before the loop ;)
+        // assing the consumers before the loop ;)
         int speed = 5;
 
-        kh.onForwardPressed = (() -> {
-            sprite.setPosition(sprite.getX(),sprite.getY()-speed);
+        kh.onForwardPressed = (e -> {
+            sprite.setPosition(sprite.getX(), sprite.getY() - speed);
         });
-        kh.onBackwardPressed = (() -> {
-            sprite.setPosition(sprite.getX(),sprite.getY()+speed);
+        kh.onBackwardPressed = (e -> {
+            sprite.setPosition(sprite.getX(), sprite.getY() + speed);
         });
-        kh.onRightPressed = (() -> {
-            sprite.setPosition(sprite.getX()+speed,sprite.getY());
+        kh.onRightPressed = (e -> {
+            sprite.setPosition(sprite.getX() + speed, sprite.getY());
         });
-        kh.onLeftPressed = (() -> {
-            sprite.setPosition(sprite.getX()-speed,sprite.getY());
+        kh.onLeftPressed = (e -> {
+            sprite.setPosition(sprite.getX() - speed, sprite.getY());
         });
 
         //it's important to refresh the panel
@@ -193,19 +203,19 @@ public class Main {
                 sprite.setRotation(sprite.getRotation() + 1.0);
 
                 //we get all the meshes
-                for(Mesh mesh : panel.getMeshes()){
+                for (Mesh mesh : panel.getMeshes()) {
                     //then the triangles
-                    for(Triangle tt : mesh.triangles){
+                    for (Triangle tt : mesh.triangles) {
                         // and then we search our wanted triangle
-                        if(tt.getTag().equals("move")){
-                            TriangleTransform.translate(1,0,tt);
-                        }else if(tt.getTag().equals("rotate")){
-                            TriangleTransform.rotate(1,tt);
-                        }else if(tt.getTag().equals("scale")){
-                            TriangleTransform.scaleUp(1.0025,tt);
+                        if (tt.getTag().equals("move")) {
+                            TriangleTransform.translate(1, 0, tt);
+                        } else if (tt.getTag().equals("rotate")) {
+                            TriangleTransform.rotate(1, tt);
+                        } else if (tt.getTag().equals("scale")) {
+                            TriangleTransform.scaleUp(1.0025, tt);
                         }
                     }
-                };
+                }
 
                 panel.repaint();
                 try {

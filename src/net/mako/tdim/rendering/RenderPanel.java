@@ -1,4 +1,6 @@
-package net.mako.rendering;
+package net.mako.tdim.rendering;
+
+import net.mako.tdim.rendering.components.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +30,18 @@ public class RenderPanel extends JPanel {
     public void addSpriteToPanel(Sprite sprite) {
         sprites.add(sprite);
     }
+    public void addModelToPanel(Model model,double cx,double cy) {
+        for(Mesh mesh : model.meshes) {
+            for(Triangle t : mesh.triangles){
+                for(Vertex v : t.vertexes){
+                    Vertex newV = new Vertex(cx+v.getX(),cy+v.getY());
+                    t.setNextVertex(newV);
+                }
+            }
+
+            meshes.add(mesh);
+        }
+    }
 
     private static void drawMeshes(Graphics2D g2d) {
         synchronized (meshes) {
@@ -35,9 +49,9 @@ public class RenderPanel extends JPanel {
                 for (Triangle t : mesh.triangles) {
                     g2d.setColor(t.color);
                     Path2D path = new Path2D.Double();
-                    path.moveTo(t.v1.x, t.v1.y);
-                    path.lineTo(t.v2.x, t.v2.y);
-                    path.lineTo(t.v3.x, t.v3.y);
+                    path.moveTo(t.v1.getX(), t.v1.getY());
+                    path.lineTo(t.v2.getX(), t.v2.getY());
+                    path.lineTo(t.v3.getX(), t.v3.getY());
                     path.closePath();
                     g2d.draw(path);
 

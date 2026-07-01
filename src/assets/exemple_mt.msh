@@ -1,0 +1,21 @@
+msh_format:multimesh
+
+mesh:[
+    t:[
+        v:{150,0},
+        v:{200,0},
+        v:{200,50},
+        fill:true,
+        color:{255,255,0},
+        tag:test1
+    ]
+
+    t:[
+        v:{150,0},
+        v:{150,50},
+        v:{200,50},
+        fill:false,
+        color:{0,255,255},
+        tag:test2
+    ]
+]

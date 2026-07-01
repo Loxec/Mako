@@ -1,0 +1,28 @@
+msh_format:indexed_multimesh
+
+vertices:[
+    i:100,0
+    i:150,0
+    i:150,50
+    i:100,50
+]
+
+mesh:[
+    t:[
+        v:0,
+        v:1,
+        v:2,
+        fill:true
+        color:{128,128,255},
+        tag:test3
+    ]
+
+    t:[
+        v:0,
+        v:3,
+        v:2,
+        fill:false
+        color:{255,128,255},
+        tag:test4
+    ]
+]

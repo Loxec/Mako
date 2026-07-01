@@ -1,12 +1,9 @@
-package net.mako.msh;
+package net.mako.tdim.rendering.msh;
 
-import net.mako.rendering.Mesh;
+import net.mako.tdim.rendering.components.Model;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModelParser {
@@ -56,6 +53,12 @@ public class ModelParser {
                             case "indexed_t":
                                 return FormatType.INDEXED_T;
 
+                            case "multimesh":
+                                return FormatType.MULTIMESH;
+
+                            case "indexed_multimesh":
+                                return FormatType.INDEXED_MULTIMESH;
+
                             default:
                                 return FormatType.NULL;
                         }
@@ -72,18 +75,24 @@ public class ModelParser {
         return formatType;
     }
 
-    public Mesh getMesh(FormatType formatType) {
+    public Model getModel(FormatType formatType) {
 
-        Mesh mesh = null;
+        Model mesh = null;
 
         if(formatType == FormatType.NULL) {
             mesh = null;
         }else if(formatType == FormatType.BASIC_T) {
             ModelConverter converter = new ModelConverter(new File(this.url.getFile()),FormatType.BASIC_T);
-            mesh = converter.getMesh();
+            mesh = converter.getModel();
         }else if(formatType == FormatType.INDEXED_T) {
             ModelConverter converter = new ModelConverter(new File(this.url.getFile()),FormatType.INDEXED_T);
-            mesh = converter.getMesh();
+            mesh = converter.getModel();
+        }else if(formatType == FormatType.MULTIMESH) {
+            ModelConverter converter = new ModelConverter(new File(this.url.getFile()),FormatType.MULTIMESH);
+            mesh = converter.getModel();
+        }else if(formatType == FormatType.INDEXED_MULTIMESH) {
+            ModelConverter converter = new ModelConverter(new File(this.url.getFile()),FormatType.INDEXED_MULTIMESH);
+            mesh = converter.getModel();
         }
 
         return mesh;

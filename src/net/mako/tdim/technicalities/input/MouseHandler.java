@@ -1,66 +1,67 @@
-package net.mako.input;
+package net.mako.tdim.technicalities.input;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.function.Consumer;
 
 public class MouseHandler implements MouseListener, MouseMotionListener {
 
-    public Runnable onMouseClicked;
-    public Runnable onMousePressed;
-    public Runnable onMouseReleased;
-    public Runnable onMouseEntered;
-    public Runnable onMouseExited;
+    public Consumer onMouseClicked;
+    public Consumer onMousePressed;
+    public Consumer onMouseReleased;
+    public Consumer onMouseEntered;
+    public Consumer onMouseExited;
 
-    public Runnable onMouseDragged;
-    public Runnable onMouseMoved;
+    public Consumer onMouseDragged;
+    public Consumer onMouseMoved;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if(onMouseClicked != null) {
-            onMouseClicked.run();
+            onMouseClicked.accept(e);
         }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         if(onMousePressed != null) {
-            onMousePressed.run();
+            onMousePressed.accept(e);
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if(onMouseReleased != null) {
-            onMouseReleased.run();
+            onMouseReleased.accept(e);
         }
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         if(onMouseEntered != null) {
-            onMouseEntered.run();
+            onMouseEntered.accept(e);
         }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         if(onMouseExited != null) {
-            onMouseExited.run();
+            onMouseExited.accept(e);
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         if(onMouseDragged != null) {
-            onMouseDragged.run();
+            onMouseDragged.accept(e);
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         if(onMouseMoved != null) {
-            onMouseMoved.run();
+            onMouseMoved.accept(e);
         }
     }
 }
